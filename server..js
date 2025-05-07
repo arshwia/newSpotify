@@ -5,4 +5,4 @@ import querystring from 'querystring';
 import fs from 'fs';
 import path from 'path';
 
-سلام تسیتی
+// سلام تسیتی
