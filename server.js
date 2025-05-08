@@ -26,3 +26,7 @@ app.listen(port, () => {
 app.get("/", (req, res) => {
 	res.render("login", { title: "login" })
 })
+
+app.get("/about", (req, res) => {
+	res.render("about", { title: "about" })
+})
