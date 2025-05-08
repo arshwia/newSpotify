@@ -5,6 +5,8 @@ import querystring from 'querystring';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import mongoose from 'mongoose';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +29,50 @@ app.get("/", (req, res) => {
 	res.render("login", { title: "login" })
 })
 
+app.get("/login", (req, res) => {
+
+	const queryParams = new URLSearchParams({
+		response_type: "code",
+		client_id: process.env.SPOTIFY_CLIENT_ID,
+		scope: 'playlist-read-private user-library-read',
+		redirect_uri: process.env.REDIRECT_URI
+	});
+
+	res.redirect(`https://accounts.spotify.com/authorize?${queryParams.toString()}`)
+})
+
 app.get("/about", (req, res) => {
 	res.render("about", { title: "about" })
+})
+
+app.get("/callback", async (req, res) => {
+	const code = req.query.code;
+
+	if (!code) {
+		return res.status(400).send("No code provided")
+	}
+
+	try {
+		const credentials = Buffer
+			.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`)
+			.toString('base64')
+		
+		const response = await axios.post('https://accounts.spotify.com/api/token', new URLSearchParams({
+			grant_type: 'authorization_code',
+			code: code,
+			redirect_uri: process.env.REDIRECT_URI
+		}), {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': `Basic ${credentials}`
+			}
+		})
+		let accessToken
+		accessToken = response.data.access_token;
+
+		res.render("playlists-link", { title: "playlists-link" })
+	} catch (error) {
+		console.error("Error during callback:", error)
+		res.status(500).send("Error during authentication")
+	}
 })
