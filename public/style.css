@@ -19,8 +19,8 @@ footer p a {
     color: #3be477;
 }
 
-/* login style */
-.body-login {
+/* login , playlists-link styles */
+.body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,4 +37,28 @@ footer p a {
     border-radius: 100px;
 
     /* margin-left: 400px; */
+}
+
+/* playlist style */
+ul li {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 50px;
+
+    color: #3be477;
+}
+
+ul li p {
+    font-size: 27px;
+}
+
+.a-playlist {
+    font-size: 25px;
+    background-color: #3be477;
+    color: black;
+    padding: 15px 100px;
+    border-radius: 100px;
+    border: none;
 }

@@ -87,9 +87,28 @@ app.get("/playlists", async (req ,res) => {
 			  }			  
 		})
 
-		res.json(response.data)
+		const playlists = response.data.items
+		res.render("playlists", { title:"playlist-ul", playlists })
 	} catch (error) {
 		console.error("Error during callback:", error)
 		res.status(500).send("Error during authentication")
 	}
 })
+
+app.get("/playlist/:id/tracks", async (req, res) => {
+	const playlistId = req.params.id;
+  
+	try {
+	  const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+		headers: {
+		  Authorization: `Bearer ${accessToken}`
+		}
+	  });
+  
+	  const tracks = response.data.items;
+	  res.render("tracks", { title:"track list", tracks });
+	} catch (error) {
+	  console.error("Error fetching tracks:", error);
+	  res.status(500).send("Error fetching tracks");
+	}
+});
