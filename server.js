@@ -16,6 +16,8 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
+let accessToken = "";
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.set("view engine", "ejs");
@@ -67,10 +69,25 @@ app.get("/callback", async (req, res) => {
 				'Authorization': `Basic ${credentials}`
 			}
 		})
-		let accessToken
+
 		accessToken = response.data.access_token;
 
 		res.render("playlists-link", { title: "playlists-link" })
+	} catch (error) {
+		console.error("Error during callback:", error)
+		res.status(500).send("Error during authentication")
+	}
+})
+
+app.get("/playlists", async (req ,res) => {
+	try {
+		const response = await axios.get("https://api.spotify.com/v1/me/playlists", {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			  }			  
+		})
+
+		res.json(response.data)
 	} catch (error) {
 		console.error("Error during callback:", error)
 		res.status(500).send("Error during authentication")
