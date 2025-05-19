@@ -62,3 +62,14 @@ ul li p {
     border-radius: 100px;
     border: none;
 }
+
+.body-teacks {
+    background-color: black;
+}
+
+.body-teacks ol li {
+    color: white;
+    font-size: 27px;
+    margin-left: 55px;
+    margin-top: 5px;
+}

@@ -3,13 +3,13 @@
 
 <%- include('./partials/header') %>
 
-<body>
+<body class="body-teacks">
 	
-	<ul>
+	<ol>
 		<% tracks.forEach(item => { %>
 		  <li><%= item.track.name %> - <%= item.track.artists[0].name %></li>
 		<% }) %>
-	</ul>
+	</ol>
 
 
 	<%- include('./partials/footer') %>
