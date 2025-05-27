@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+* {
+    font-family: 'Nunito';
+}
+
 /* footer style */
 footer {
     display: flex;
@@ -70,6 +75,26 @@ ul li p {
 .body-teacks ol li {
     color: white;
     font-size: 27px;
-    margin-left: 55px;
+    margin: 10px 55px;
     margin-top: 5px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.body-teacks ol li .span .track-name a , .body-teacks ol li .span .artist-name a {
+    margin-right: 5px;
+    margin-left: 5px;
+    color: #3be477;
+}
+
+.dow button {
+    padding: 10px 110px;
+    color: black;
+    background-color: #3be477;
+    border-radius: 100px;
+    border: none;
+
+    font-size: 17px;
 }

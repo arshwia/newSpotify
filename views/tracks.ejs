@@ -1,17 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+    <%- include('./partials/header') %>
 
-<%- include('./partials/header') %>
+    <body class="body-teacks">
+        <ol>
+            <% tracks.forEach(item => { %>
+            <li>
+                <div class="span">
+                    <span class="track-name">
+                        <a
+                            target="_blank"
+                            href="<%= item.track.external_urls.spotify %>"
+                            target="_blank"
+                        >
+                            <%= item.track.name %>
+                        </a>
+                    </span>
+                    >>>
+                    <span class="artist-name">
+                        <% item.track.artists.forEach((artist, index) => { %>
+                        <a
+                            href="<%= artist.external_urls.spotify %>"
+                            target="_blank"
+                        >
+                            <%= artist.name %> </a
+                        ><%= index < item.track.artists.length - 1 ? ', ' : ''
+                        %> <% }) %>
+                    </span>
+                </div>
+                <span class="dow">
+                    <button
+                        onclick="downloadTrack('<%= item.track.name %>', '<%= item.track.artists.map(a => a.name).join(', ') %>')"
+                    >
+                        Download
+                    </button>
+                </span>
+            </li>
+            <% }) %>
+        </ol>
 
-<body class="body-teacks">
-	
-	<ol>
-		<% tracks.forEach(item => { %>
-		  <li><%= item.track.name %> - <%= item.track.artists[0].name %></li>
-		<% }) %>
-	</ol>
+        <%- include('./partials/footer') %>
 
-
-	<%- include('./partials/footer') %>
-</body>
+        <script>
+            function downloadTrack(trackName, firstArtist) {
+                const query = encodeURIComponent(trackName + " " + firstArtist);
+                fetch(`/youtube-search?q=${query}`)
+                    .then((res) => {
+                        if (!res.ok) throw new Error("Video not found");
+                        return res.json();
+                    })
+                    .then((video) => {
+                        window.location.href = `/download?url=${encodeURIComponent(
+                            video.url
+                        )}`;
+                    })
+                    .catch((err) => alert(err.message));
+            }
+        </script>
+    </body>
 </html>
