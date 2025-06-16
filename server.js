@@ -80,7 +80,7 @@ app.get("/callback", async (req, res) => {
 		res.render("playlists-link", { title: "playlists-link" })
 	} catch (error) {
 		console.error("Error during callback:", error)
-		res.status(500).send("Error during authentication")
+		res.status(500).render("error", { title:"404Page" })
 	}
 })
 
@@ -96,7 +96,7 @@ app.get("/playlists", async (req, res) => {
 		res.render("playlists", { title: "playlist-ul", playlists })
 	} catch (error) {
 		console.error("Error during callback:", error)
-		res.status(500).send("Error during authentication")
+		res.status(500).render("error", { title:"404Page" });
 	}
 })
 
@@ -131,7 +131,7 @@ app.get("/playlist/:id/tracks", async (req, res) => {
 		res.render("tracks", { title: "track list", tracks: allTracks });
 	} catch (error) {
 		console.error("Error fetching tracks:", error);
-		res.status(500).send("Error fetching tracks");
+		res.status(500).render("error", { title:"404Page" });
 	}
 });
 
@@ -156,7 +156,7 @@ app.get('/youtube-search', async (req, res) => {
 		}
 	} catch (error) {
 		console.error("YouTube search error:", error);
-		res.status(500).send("Error searching YouTube");
+		res.status(500).render("error", { title:"404Page" });
 	}
 });
 
@@ -177,6 +177,10 @@ app.get('/download', async (req, res) => {
 		}).pipe(res);
 	} catch (error) {
 		console.error('Download error:', error);
-		res.status(500).send('Error downloading video');
+		res.status(500).render("error", { title:"404Page" });
 	}
 });
+
+app.use((req, res) => {
+	res.status(404).render("error", { title:"404Page" })
+})
