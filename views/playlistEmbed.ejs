@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('./partials/header') %>
+
+    <body style="background-color: black; color: white;">
+        <h1>امبدد پلی‌لیست</h1>
+
+        <% tracks.forEach(track=> { %>
+            <div style="margin-bottom: 20px;">
+                <p><%= track.name %> - <%= track.artists.map(artist=> artist.name).join(", ") %></p>
+                <iframe 
+                src="https://open.spotify.com/embed/track/<%= track.id %>" 
+                width="300" 
+                height="80"
+                frameborder="0" 
+                allowtransparency="true" 
+                allow="encrypted-media">
+                </iframe>
+            </div>
+        <% }) %>
+
+    </body>
+
+</html>

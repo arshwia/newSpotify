@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import ytSearch from 'yt-search';
 import ytdl from 'ytdl-core';
+import { title } from 'process';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -134,6 +135,22 @@ app.get("/playlist/:id/tracks", async (req, res) => {
 		res.status(500).render("error", { title:"404Page" });
 	}
 });
+
+app.get('/playlist-embed/:playlistId', async (req, res) => {
+  const playlistId = req.params.playlistId;
+  try {
+    const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+
+    const tracks = response.data.items.map(item => item.track); // فقط خود ترک‌ها
+    res.render('playlistEmbed', { tracks, title:"Playlist Embed" });
+  } catch (error) {
+    console.error("Error fetching playlist tracks for embed:", error);
+    res.status(500).render("error", { title: "404Page" });
+  }
+});
+
 
 // app.get('/youtube-search', async (req, res) => {
 // 	const query = req.query.q;

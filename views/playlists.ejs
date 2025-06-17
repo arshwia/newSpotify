@@ -14,7 +14,13 @@
 				<a href="<%= playlist.external_urls.spotify %>" class="a-playlist" target="_blank">go spotify</a>
 				<form target="_blank" action="/playlist/<%= playlist.id %>/tracks" method="get" style="display:inline;">
 					<button type="submit" class="a-playlist" >View Tracks</button>
-				</form>			
+				</form>
+				
+				<button onclick="location.href='/playlist-embed/<%= playlist.id %>'">
+					رفتن به صفحه امبدد پلی‌لیست
+				</button>
+
+
 			</div>
 		</li>
     	<% }) %>
