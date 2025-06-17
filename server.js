@@ -136,20 +136,51 @@ app.get("/playlist/:id/tracks", async (req, res) => {
 	}
 });
 
+// app.get('/playlist-embed/:playlistId', async (req, res) => {
+//   const playlistId = req.params.playlistId;
+//   try {
+//     const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+//       headers: { Authorization: `Bearer ${accessToken}` }
+//     });
+
+//     const tracks = response.data.items.map(item => item.track); // فقط خود ترک‌ها
+//     res.render('playlistEmbed', { tracks, title:"Playlist Embed" });
+//   } catch (error) {
+//     console.error("Error fetching playlist tracks for embed:", error);
+//     res.status(500).render("error", { title: "404Page" });
+//   }
+// });
+
 app.get('/playlist-embed/:playlistId', async (req, res) => {
   const playlistId = req.params.playlistId;
-  try {
-    const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    });
+  const limit = 100;
+  let offset = 0;
+  let allTracks = [];
+  let more = true;
 
-    const tracks = response.data.items.map(item => item.track); // فقط خود ترک‌ها
-    res.render('playlistEmbed', { tracks, title:"Playlist Embed" });
+  try {
+    while (more) {
+      const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        params: { limit, offset }
+      });
+
+      allTracks.push(...response.data.items.map(item => item.track));
+
+      if (response.data.items.length < limit) {
+        more = false;
+      } else {
+        offset += limit;
+      }
+    }
+
+    res.render('playlistEmbed', { tracks: allTracks, title: "Playlist Embed" });
   } catch (error) {
     console.error("Error fetching playlist tracks for embed:", error);
     res.status(500).render("error", { title: "404Page" });
   }
 });
+
 
 
 // app.get('/youtube-search', async (req, res) => {
