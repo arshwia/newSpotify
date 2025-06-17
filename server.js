@@ -135,51 +135,51 @@ app.get("/playlist/:id/tracks", async (req, res) => {
 	}
 });
 
-app.get('/youtube-search', async (req, res) => {
-	const query = req.query.q;
-	if (!query) {
-		return res.status(400).send("Query parameter 'q' is required");
-	}
+// app.get('/youtube-search', async (req, res) => {
+// 	const query = req.query.q;
+// 	if (!query) {
+// 		return res.status(400).send("Query parameter 'q' is required");
+// 	}
 
-	try {
-		const results = await ytSearch(query);
-		if (results && results.videos && results.videos.length > 0) {
-			const video = results.videos[0];
-			res.json({
-				title: video.title,
-				url: video.url,
-				duration: video.timestamp,
-				views: video.views
-			});
-		} else {
-			res.status(404).send("No videos found");
-		}
-	} catch (error) {
-		console.error("YouTube search error:", error);
-		res.status(500).render("error", { title:"404Page" });
-	}
-});
+// 	try {
+// 		const results = await ytSearch(query);
+// 		if (results && results.videos && results.videos.length > 0) {
+// 			const video = results.videos[0];
+// 			res.json({
+// 				title: video.title,
+// 				url: video.url,
+// 				duration: video.timestamp,
+// 				views: video.views
+// 			});
+// 		} else {
+// 			res.status(404).send("No videos found");
+// 		}
+// 	} catch (error) {
+// 		console.error("YouTube search error:", error);
+// 		res.status(500).render("error", { title:"404Page" });
+// 	}
+// });
 
-app.get('/download', async (req, res) => {
-	const videoUrl = req.query.url;
-	if (!videoUrl) {
-		return res.status(400).send('Missing video URL');
-	}
+// app.get('/download', async (req, res) => {
+// 	const videoUrl = req.query.url;
+// 	if (!videoUrl) {
+// 		return res.status(400).send('Missing video URL');
+// 	}
 
-	try {
-		const info = await ytdl.getInfo(videoUrl);
-		const title = info.videoDetails.title.replace(/[\/\\?%*:|"<>]/g, '-'); // حذف کاراکترهای مشکل‌ساز
-		res.header('Content-Disposition', `attachment; filename="${title}.mp3"`);
+// 	try {
+// 		const info = await ytdl.getInfo(videoUrl);
+// 		const title = info.videoDetails.title.replace(/[\/\\?%*:|"<>]/g, '-'); // حذف کاراکترهای مشکل‌ساز
+// 		res.header('Content-Disposition', `attachment; filename="${title}.mp3"`);
 
-		ytdl(videoUrl, {
-			filter: 'audioonly',
-			quality: 'highestaudio',
-		}).pipe(res);
-	} catch (error) {
-		console.error('Download error:', error);
-		res.status(500).render("error", { title:"404Page" });
-	}
-});
+// 		ytdl(videoUrl, {
+// 			filter: 'audioonly',
+// 			quality: 'highestaudio',
+// 		}).pipe(res);
+// 	} catch (error) {
+// 		console.error('Download error:', error);
+// 		res.status(500).render("error", { title:"404Page" });
+// 	}
+// });
 
 app.use((req, res) => {
 	res.status(404).render("error", { title:"404Page" })
