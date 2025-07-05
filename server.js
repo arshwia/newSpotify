@@ -1,14 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import axios from 'axios';
-import querystring from 'querystring';
-import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import ytSearch from 'yt-search';
-import ytdl from 'ytdl-core';
 import { title } from 'process';
 
 
