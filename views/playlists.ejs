@@ -16,14 +16,14 @@
 				<p style="display: inline-block;color: white;margin: 0px 10px;">>>></p>
 
 				<form target="_blank" action="/playlist/<%= playlist.id %>/tracks" method="get" style="display:inline;">
-					<a type="submit" class="a-playlist" >View Tracks</a>
+					<button type="submit" class="a-playlist" ><u>View Tracks</u></button>
 				</form>
 
 				<p style="display: inline-block;color: white;margin: 0px 10px;">>>></p>
 				
-				<a class="a-playlist" onclick="location.href='/playlist-embed/<%= playlist.id %>'">
-					Embed tracks
-				</a>
+				<button class="a-playlist" onclick="location.href='/playlist-embed/<%= playlist.id %>'">
+					<u>Embed tracks</u>
+				</button>
 
 
 			</div>

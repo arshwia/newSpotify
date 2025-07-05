@@ -62,6 +62,9 @@ ul li p {
 .a-playlist {
     font-size: 25px;
     color: #3be477;
+    border: none;
+    background-color: #3be47600;
+
 }
 
 .body-teacks {
