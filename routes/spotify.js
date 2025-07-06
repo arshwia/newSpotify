@@ -1,6 +1,6 @@
 import express from "express";
 import axios from "axios";
-import { getAccessToken } from "./auht.js";
+import { getAccessToken } from './auth.js'
 
 const router = express.Router();
 let accessToken = "";
