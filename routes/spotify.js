@@ -9,6 +9,10 @@ app.get("/", (req, res) => {
     res.render("login", { title: "login" })
 })
 
+app.get("/about", (req, res) => {
+    res.render("about", { title: "about" })
+})
+
 app.get("/login", (req, res) => {
 
     const queryParams = new URLSearchParams({
@@ -19,10 +23,6 @@ app.get("/login", (req, res) => {
     });
 
     res.redirect(`https://accounts.spotify.com/authorize?${queryParams.toString()}`)
-})
-
-app.get("/about", (req, res) => {
-    res.render("about", { title: "about" })
 })
 
 app.get("/callback", async (req, res) => {
