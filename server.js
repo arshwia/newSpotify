@@ -1,9 +1,7 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import morgan from 'morgan';
-import { title } from 'process';
 
 import spotifyRouter from './routes/spotify.js';
 

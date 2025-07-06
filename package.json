@@ -14,13 +14,10 @@
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "fs": "^0.0.1-security",
     "mongoose": "^8.14.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.10",
     "path": "^0.12.7",
-    "querystring": "^0.2.1",
-    "yt-search": "^2.13.1",
-    "ytdl-core": "^4.11.5"
+    "querystring": "^0.2.1"
   }
 }
