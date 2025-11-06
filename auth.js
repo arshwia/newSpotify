@@ -1,5 +1,5 @@
-import axion from 'axios';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, REDIRECT_URI } from './config.js';
+import axios from 'axios';
 
 export async function getAccessToken(code) {
     const credentials = Buffer

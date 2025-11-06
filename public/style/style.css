@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-* {
-    font-family: 'Nunito';
+body {
+    font-family: Nunito, Arial;
 }
 
 /* footer style */
@@ -104,4 +103,79 @@ ul li p {
     grid-template-columns: auto auto auto auto;
     grid-gap: 10px;
     padding: 10px;
+}
+
+/* track file style */
+.li-track-file {
+    position: relative;
+}
+
+.track-info {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #3be477;
+    box-shadow: 5px, 5px, 5px, rgba(255, 255, 255, 0.4);
+    width: 350px;
+}
+
+.hidden {
+    display: none;
+}
+
+.track-info p {
+    margin: 10px;
+}
+
+.track-info {
+  position: absolute;
+  background: #1e1e1e;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  width: 450px;
+  font-size: 27px;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* وقتی فعال بشه (بالا سمت راست) */
+.track-info.show-fixed {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  z-index: 1000;
+}
+
+/* وقتی پنهان باشه */
+.track-info.hidden {
+  display: none;
+}
+
+/* لینک اسپاتیفای */
+.track-info a {
+  color: #1DB954;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.track-info a:hover {
+  text-decoration: underline;
+}
+
+.info-btn {
+    width: 70px;
+    height: 27px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #1DB954;
+    border: 0;
+    border-radius: 50px;
 }

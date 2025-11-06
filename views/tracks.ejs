@@ -1,59 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('./partials/header') %>
+<%- include('./partials/header') %>
 
     <body class="body-teacks">
         <ol>
-            <% tracks.forEach(item => { %>
-            <li>
-                <div class="span">
-                    <span class="track-name">
-                        <a
-                            target="_blank"
-                            href="<%= item.track.external_urls.spotify %>"
-                            target="_blank"
-                        >
-                            <%= item.track.name %>
-                        </a>
-                    </span>
-                    >>>
-                    <span class="artist-name">
-                        <% item.track.artists.forEach((artist, index) => { %>
-                        <a
-                            href="<%= artist.external_urls.spotify %>"
-                            target="_blank"
-                        >
-                            <%= artist.name %> </a
-                        ><%= index < item.track.artists.length - 1 ? ', ' : ''
-                        %> <% }) %>
-                    </span>
-                </div>
-                <!-- <span class="dow">
-                    <button>
-                        Embed
-                    </button>
-                </span> -->
-            </li>
-            <% }) %>
+            <% tracks.forEach(item=> { %>
+                <li class="li-track-file">
+                    <div class="span">
+                        <span class="track-name">
+                            <a target="_blank" href="<%= item.track.external_urls.spotify %>" target="_blank">
+                                <%= item.track.name %>
+                            </a>
+                        </span>
+                        >>>
+                        <span class="artist-name">
+                            <% item.track.artists.forEach((artist, index)=> { %>
+                                <a href="<%= artist.external_urls.spotify %>" target="_blank">
+                                    <%= artist.name %>
+                                </a>
+                                <%= index < item.track.artists.length - 1 ? ', ' : '' %>
+                                <% }) %>
+                        </span>
+
+                        <button class="info-btn">info</button>
+                        <span class="track-info hidden">
+
+                            <p>
+                                <%= item.track.name %>
+                            </p>
+
+                            <p>
+                                <% item.track.artists.forEach((artist, index)=> { %>
+                                <%= artist.name %>
+                                <%= index < item.track.artists.length - 1 ? ', ' : '' %>
+                                <% }); %>
+                            </p>
+
+                            <% const durationSeconds=item.track.duration_ms / 1000 %>
+                            <% const min=Math.floor(durationSeconds / 60); %>
+                            <% const seconds=Math.floor(durationSeconds % 60); %>
+                            <% const zman=`${min} : ${String(seconds).padStart(2, '0' )}`; %>
+                            <p>
+                                <%= zman %>
+                            </p>
+
+                            <a target="_blank" href="<%= item.track.external_urls.spotify %>">link</a>
+                        </span>
+                    </div>
+
+                </li>
+                <% }) %>
         </ol>
 
         <%- include('./partials/footer') %>
 
-        <script>
-            function downloadTrack(trackName, firstArtist) {
-                const query = encodeURIComponent(trackName + " " + firstArtist);
-                fetch(`/youtube-search?q=${query}`)
-                    .then((res) => {
-                        if (!res.ok) throw new Error("Video not found");
-                        return res.json();
-                    })
-                    .then((video) => {
-                        window.location.href = `/download?url=${encodeURIComponent(
-                            video.url
-                        )}`;
-                    })
-                    .catch((err) => alert(err.message));
-            }
-        </script>
+            <script>
+                function downloadTrack(trackName, firstArtist) {
+                    const query = encodeURIComponent(trackName + " " + firstArtist);
+                    fetch(`/youtube-search?q=${query}`)
+                        .then((res) => {
+                            if (!res.ok) throw new Error("Video not found");
+                            return res.json();
+                        })
+                        .then((video) => {
+                            window.location.href = `/download?url=${encodeURIComponent(
+                                video.url
+                            )}`;
+                        })
+                        .catch((err) => alert(err.message));
+                }
+
+                //برای هیدن کردن اطلاعات
+                const hiddenInfoBtns = document.querySelectorAll('.info-btn');
+
+                hiddenInfoBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // همه‌ی infoها رو ببند
+                        document.querySelectorAll('.track-info').forEach(info => info.classList.add('hidden'));
+
+                        // info مربوط به همین دکمه رو باز کن
+                        const info = btn.nextElementSibling;
+
+                        // اگر همون دکمه دوباره زده شد، پنهونش کن (toggle)
+                        if (info.classList.contains('hidden')) {
+                            info.classList.remove('hidden');
+                            info.classList.add('show-fixed');
+                        } else {
+                            info.classList.add('hidden');
+                            info.classList.remove('show-fixed');
+                        }
+                    });
+                });
+
+            </script>
     </body>
+
 </html>

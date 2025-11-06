@@ -1,31 +1,31 @@
 import express from "express";
 import axios from "axios";
-import { getAccessToken } from './auth.js'
+import { getAccessToken } from '../auth.js';
 
 const router = express.Router();
 let accessToken = "";
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     res.render("login", { title: "login" })
 })
 
-app.get("/about", (req, res) => {
+router.get("/about", (req, res) => {
     res.render("about", { title: "about" })
 })
 
-app.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
 
     const queryParams = new URLSearchParams({
         response_type: "code",
-        client_id: SPOTIFY_CLIENT_ID,
+        client_id: process.env.SPOTIFY_CLIENT_ID,
         scope: 'playlist-read-private user-library-read',
-        redirect_uri: REDIRECT_URI
+        redirect_uri: process.env.REDIRECT_URI
     });
 
     res.redirect(`https://accounts.spotify.com/authorize?${queryParams.toString()}`)
 })
 
-app.get("/callback", async (req, res) => {
+router.get("/callback", async (req, res) => {
     const code = req.query.code;
     if (!code) return res.status(400).send("No code provided");
 
@@ -38,7 +38,7 @@ app.get("/callback", async (req, res) => {
     };
 })
 
-app.get("/playlists", async (req, res) => {
+router.get("/playlists", async (req, res) => {
     try {
         const response = await axios.get("https://api.spotify.com/v1/me/playlists", {
             headers: {
@@ -54,7 +54,7 @@ app.get("/playlists", async (req, res) => {
     }
 })
 
-app.get("/playlist/:id/tracks", async (req, res) => {
+router.get("/playlist/:id/tracks", async (req, res) => {
     const playlistId = req.params.id;
     const limit = 100;
     let offset = 0;
@@ -89,7 +89,7 @@ app.get("/playlist/:id/tracks", async (req, res) => {
     }
 });
 
-app.get('/playlist-embed/:playlistId', async (req, res) => {
+router.get('/playlist-embed/:playlistId', async (req, res) => {
   const playlistId = req.params.playlistId;
   const limit = 100;
   let offset = 0;
