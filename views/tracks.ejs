@@ -6,7 +6,9 @@
         <ol>
             <% tracks.forEach(item=> { %>
                 <li class="li-track-file">
-                    <div class="span">
+                    <div class="span" style="display: flex; align-items: center;">
+                        <% const urlimg = item.track.album.images[2].url %>
+                        <img style="width: 45px; height: 45px; margin-right: 15px;" src="<%= urlimg %>" alt="">
                         <span class="track-name">
                             <a target="_blank" href="<%= item.track.external_urls.spotify %>" target="_blank">
                                 <%= item.track.name %>
